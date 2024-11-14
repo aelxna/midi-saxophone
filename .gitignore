@@ -18,11 +18,8 @@
 /dist/
 /disassembly/
 /.generated_files/
-/nbproject/private/
-/nbproject/*.mk
-/nbproject/*.bash
-/nbproject/Makefile-genesis.properties
-/nbproject/queuelogs/
+/nbproject/
+
 
 # MCC specific
 *mc3.bak*
@@ -31,5 +28,4 @@
 *.exe
 *.zip
 *.pdf
-/nbproject/configurations.xml
-/nbproject/project.xml
+
