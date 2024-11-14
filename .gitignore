@@ -31,5 +31,5 @@
 *.exe
 *.zip
 *.pdf
-nbproject/configurations.xml
-nbproject/project.xml
+/nbproject/configurations.xml
+/nbproject/project.xml
