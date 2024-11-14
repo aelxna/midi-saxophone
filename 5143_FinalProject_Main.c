@@ -7,13 +7,8 @@
 
 
 #include <avr/io.h>
-
-struct currInputs {
-    
-    uint32_t keys;
-    uint16_t airflow;
-    
-};
+#include "adc.h"
+#include "gpio_i2c.h"
 
 int setup (void) {
     

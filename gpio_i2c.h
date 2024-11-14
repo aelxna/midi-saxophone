@@ -1,0 +1,28 @@
+/* 
+ * File:   5143_FinalProject_GPIOI2C.h
+ * Author: gahym
+ *
+ * Created on November 14, 2024, 11:28 AM
+ */
+
+#ifndef GPIO_I2C_H
+#define	GPIO_I2C_H
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
+typedef struct {
+    
+    uint32_t keys;
+    uint16_t airflow;
+    
+} inputs_t;
+
+
+#ifdef	__cplusplus
+}
+#endif
+
+#endif	/* GPIO_I2C_H */
+
