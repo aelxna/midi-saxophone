@@ -8,9 +8,7 @@
 #ifndef GPIO_I2C_H
 #define	GPIO_I2C_H
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
+
 
 typedef struct {
     
@@ -19,10 +17,6 @@ typedef struct {
     
 } inputs_t;
 
-
-#ifdef	__cplusplus
-}
-#endif
 
 #endif	/* GPIO_I2C_H */
 
