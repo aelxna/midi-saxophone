@@ -8,8 +8,25 @@
 
 #include <avr/io.h>
 
+struct currInputs {
+    
+    uint32_t keys;
+    uint16_t airflow;
+    
+};
+
+int setup (void) {
+    
+    
+    
+}
+
 int main(void) {
     /* Replace with your application code */
     while (1) {
+        
+        // run input checker
+        // do stuff with input
+        
     }
 }
