@@ -5,11 +5,9 @@
 #include "gpio_i2c.h"
 
 #define MAP_LEN 31
+#define NOTE_MAPPING(idx) (idx + 49)
 
-typedef struct {
-    uint32_t keys;
-    uint8_t note;
-} mapping_t;
+typedef uint32_t mapping_t;
 
 const mapping_t map[] = {
     
