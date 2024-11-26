@@ -29,3 +29,6 @@
 *.zip
 *.pdf
 
+defmplabxtrace.log
+defmplabxtrace.log.inx
+queuelogs/debugtool.txt

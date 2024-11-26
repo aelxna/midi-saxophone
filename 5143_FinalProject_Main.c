@@ -10,12 +10,16 @@
 #include "adc.h"
 #include "gpio_i2c.h"
 #include <avr/interrupt.h>
+#include <util/delay.h>
 
 inputs_t currInputs;
 
 int setup (void) {
     
-   
+    setupDisplay();
+    //setupADC();
+    PORTF.DIRSET = PIN4_bm;
+    
     sei();
     
 }
@@ -27,13 +31,30 @@ ISR(ADC0_RESRDY_vect)
    
     currInputs.airflow = ADC0.RES;
     
-
- 
+    setDisplay(currInputs.airflow/100,currInputs.airflow%100,0);
 }
 
 int main(void) {
     /* Replace with your application code */
+    setup();
+    
+    configureExpander();
+    
+    setDisplay(0,0,0);
+    
+    //displayCurrentNote('a', 3, 1);
+    
+    uint32_t pinData;
+    
     while (1) {
+
+        pinData = readPins();
+
+
+        
+        _delay_ms(200);
+        
+        displayHex(pinData);
         
         // run input checker
         // do stuff with input

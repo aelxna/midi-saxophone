@@ -1,6 +1,5 @@
 #include "adc.h"
 
-
 void setupADC (void) {
     
     PORTD.DIRCLR = ADCPin;
@@ -20,7 +19,7 @@ void setupADC (void) {
     ADC0.CTRLA |= ADC_FREERUN_bm;
     
     // turn off the ADC conversion 
-    ADC0.COMMAND &= ~ADC_STCONV_bm;
+    ADC0.COMMAND |= ADC_STCONV_bm;
     
     
 }

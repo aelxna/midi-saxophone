@@ -12,7 +12,7 @@
 
 #define ADCPin PIN6_bm
 
-
+void setupADC (void);
 
 
 #endif	/* ADC_H */
