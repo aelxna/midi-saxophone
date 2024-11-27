@@ -37,7 +37,7 @@ ISR(ADC0_RESRDY_vect)
 int main(void) {
     /* Replace with your application code */
     setup();
-    
+  
     configureExpander();
     
     setDisplay(0,0,0);
@@ -49,10 +49,9 @@ int main(void) {
     while (1) {
 
         pinData = readPins();
-
+        currInputs.keys = pinData;
 
         
-        _delay_ms(200);
         
         displayHex(pinData);
         

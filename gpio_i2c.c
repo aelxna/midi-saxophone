@@ -10,6 +10,9 @@
 #define GPIOB_START_REGISTER 0x13
 #define GPPUA 0x0C
 #define GPPUB 0x0D
+#define IPOLA 0x02
+#define IPOLB 0x03
+
 
 #define TWI_IS_CLOCKHELD() TWI0.MSTATUS & TWI_CLKHOLD_bm
 #define TWI_IS_BUSERR() TWI0.MSTATUS & TWI_BUSERR_bm
@@ -139,7 +142,7 @@ void displayCurrentNote(char note, int octave, int accidental) {
     
 }
 
-int sendExpanderBytesManual(uint8_t* data, uint8_t writeAddr, uint8_t len) {
+int sendExpanderBytesManual(uint8_t data, uint8_t writeAddr, uint8_t len) {
     TWI0.MADDR = (EXPANDER_ADDRESS << 1) | 0;
     
     TWI_WAIT();
@@ -153,7 +156,7 @@ int sendExpanderBytesManual(uint8_t* data, uint8_t writeAddr, uint8_t len) {
     for (count = 0; count < len; count++)
     {
         //Write a byte
-        TWI0.MDATA = data[count];
+        TWI0.MDATA = data;
         
         //Wait...
         TWI_WAIT();
@@ -179,6 +182,8 @@ void configureExpander() {
     
     sendExpanderBytesManual(data, GPPUA, 1);
     sendExpanderBytesManual(data, GPPUB, 1);
+    sendExpanderBytesManual(data, IPOLA, 1);
+    sendExpanderBytesManual(data, IPOLB, 1);
     
 }
 
