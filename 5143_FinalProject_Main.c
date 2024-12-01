@@ -9,13 +9,15 @@
 #include <avr/io.h>
 #include "adc.h"
 #include "gpio_i2c.h"
+#include "uart.h"
+#include "midi.h"
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
 inputs_t currInputs;
 
 int setup (void) {
-    
+    uart_init();
     setupDisplay();
     //setupADC();
     PORTF.DIRSET = PIN4_bm;
