@@ -22,6 +22,8 @@ int setup (void) {
     //setupADC();
     PORTF.DIRSET = PIN4_bm;
     
+    setup_midi_device();
+    
     sei();
     
 }
@@ -58,7 +60,9 @@ int main(void) {
         displayHex(pinData);
         
         // run input checker
+        uint8_t note = get_note(&currInputs);
+        uint8_t vel = get_velocity(currInputs.airflow);
         // do stuff with input
-        
+        send_note(note, vel);
     }
 }
