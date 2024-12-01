@@ -13,11 +13,19 @@
 #define MEZZO_FORTE 95
 #define FORTE 127
 
+#define NOTE_ON 0x90
+#define PROG_CHANGE 0xC0
+#define SYSEX_ON 0xF0
+#define SYSEX_OFF 0xF7
+#define ALTO_SAX 66
+
 typedef uint32_t mapping_t;
 
 const mapping_t map[] = {
     
 };
+
+uint8_t first_note_on = 1;
 
 void setup_midi_device();
 
