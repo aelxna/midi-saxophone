@@ -33,7 +33,7 @@ uint8_t get_note(inputs_t *inputs);
 
 uint8_t get_velocity(uint16_t adc);
 
-void send_note(uint8_t note, uint8_t velocity);
+void send_note(uint8_t note, uint8_t velocity, uint8_t new_note, mapping_t prev);
 
 void send_sysex(uint8_t *id, int id_bytes, uint8_t *data, int data_bytes);
 

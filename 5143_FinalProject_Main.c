@@ -15,6 +15,7 @@
 #include <util/delay.h>
 
 inputs_t currInputs;
+mapping_t prevMapping;
 
 int setup (void) {
     uart_init();
@@ -49,6 +50,7 @@ int main(void) {
     //displayCurrentNote('a', 3, 1);
     
     uint32_t pinData;
+    uint8_t new_note = 0;
     
     while (1) {
 
@@ -62,7 +64,12 @@ int main(void) {
         // run input checker
         uint8_t note = get_note(&currInputs);
         uint8_t vel = get_velocity(currInputs.airflow);
+        if (currInputs.keys == prevMapping) {
+            new_note = 1;
+        }
         // do stuff with input
-        send_note(note, vel);
+        send_note(note, vel, new_note, prevMapping);
+        prevMapping = note;
+        new_note = 0;
     }
 }

@@ -32,7 +32,16 @@ uint8_t get_velocity(uint16_t adc) {
     }
 }
 
-void send_note(uint8_t note, uint8_t velocity) {
+void send_note(uint8_t note, uint8_t velocity, uint8_t new_note, mapping_t prev) {
+    // shut off prev_note
+    if (new_note) {
+        uint8_t off_data = {
+            prev,
+            0
+        };
+        uart_write_cmd(off_data, 2);
+    }
+    
     // only send note on command first time bc midi uses running statuses
     if (first_note_on) {
         uart_write_byte(NOTE_ON);
