@@ -18,12 +18,14 @@ inputs_t currInputs;
 mapping_t prevMapping;
 
 int setup (void) {
-    uart_init();
+    //uart_init();
     setupDisplay();
     //setupADC();
-    PORTF.DIRSET = PIN4_bm;
+    PORTD.DIRCLR = PIN1_bm;
+    PORTD.PIN1CTRL = PORT_PULLUPEN_bm;
     
-    setup_midi_device();
+    
+    //setup_midi_device();
     
     sei();
     
@@ -57,19 +59,29 @@ int main(void) {
         pinData = readPins();
         currInputs.keys = pinData;
 
+        if (pinData & 0x00F0) {
+            pinData |= 0x10000;
+        } else {
+            pinData &= ~0x10000;
+        }
         
+        if (!(PORTD.IN & PIN1_bm)) {
+            pinData |= 0x0080; // pin 7
+        } else {
+            pinData &= ~0x0080;
+        }
         
         displayHex(pinData);
         
-        // run input checker
-        uint8_t note = get_note(&currInputs);
-        uint8_t vel = get_velocity(currInputs.airflow);
-        if (currInputs.keys == prevMapping) {
-            new_note = 1;
-        }
-        // do stuff with input
-        send_note(note, vel, new_note, prevMapping);
-        prevMapping = note;
-        new_note = 0;
+//        // run input checker
+//        uint8_t note = get_note(&currInputs);
+//        uint8_t vel = get_velocity(currInputs.airflow);
+//        if (currInputs.keys == prevMapping) {
+//            new_note = 1;
+//        }
+//        // do stuff with input
+//        send_note(note, vel, new_note, prevMapping);
+//        prevMapping = note;
+//        new_note = 0;
     }
 }
