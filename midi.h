@@ -1,10 +1,10 @@
 #ifndef MIDI_H
-#define	MIDI_H
+#define MIDI_H
 
-#include <avr/io.h>
 #include "gpio_i2c.h"
+#include <avr/io.h>
 
-#define MAP_LEN 31
+#define MAP_LEN 32
 #define NOTE_MAPPING(idx) (idx + 49)
 
 #define NOTE_OFF 0
@@ -22,7 +22,38 @@
 typedef uint32_t mapping_t;
 
 const mapping_t map[] = {
-    
+    0x000008bf, // A#/Bb1
+    0x000004bf, // B1
+    0x000000bf, // C2
+    0x000002bf, // C#/Db2
+    0x0000003f, // D2
+    0x0000007f, // D#/Eb2
+    0x0000001f, // E2
+    0x0000000f, // F2
+    0x00000017, // F#/Gb2
+    0x00000007, // G2
+    0x00000107, // G#/Ab2
+    0x00000003, // A2
+    0x00001003, // A#/Bb2
+    0x00000001, // B2
+    0x00000002, // C3
+    0x00000000, // C#/Db3
+    0x0001003f, // D3
+    0x0001007f, // D#/Eb3
+    0x0001001f, // E3
+    0x0001000f, // F3
+    0x00010017, // F#/Gb3
+    0x00010007, // G3
+    0x00010107, // G#/Ab3
+    0x00010003, // A3
+    0x00011003, // A#/Bb3
+    0x00010001, // B3
+    0x00010002, // C4
+    0x00010000, // C#/Db4
+    0x00014000, // D4
+    0x00016000, // D#/Eb4
+    0x00017000, // E4
+    0x0001f000  // F4
 };
 
 uint8_t first_note_on = 1;
@@ -33,9 +64,9 @@ uint8_t get_note(inputs_t *inputs);
 
 uint8_t get_velocity(uint16_t adc);
 
-void send_note(uint8_t note, uint8_t velocity, uint8_t new_note, mapping_t prev);
+void send_note(uint8_t note, uint8_t velocity, uint8_t new_note,
+               mapping_t prev);
 
 void send_sysex(uint8_t *id, int id_bytes, uint8_t *data, int data_bytes);
 
-#endif	/* MIDI_H */
-
+#endif /* MIDI_H */
