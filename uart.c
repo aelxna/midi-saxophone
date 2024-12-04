@@ -1,7 +1,9 @@
 #include "uart.h"
 
+uart_pin_t uart_pin = {.dir = &(PORTC.DIR), .pin = PIN0_bm};
+
 void uart_init() {
-    *(uart_pin.dir) |= *(uart_pin.pin); // TX
+    *(uart_pin.dir) |= uart_pin.pin; // TX
     USART0.BAUD = (uint16_t)USART_BAUD_VALUE(31250); // set baud rate
     USART0.CTRLB |= USART_TXEN_bm; // enable transmit
 }

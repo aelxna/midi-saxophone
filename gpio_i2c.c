@@ -117,6 +117,17 @@ void setDisplay(int timeslot1, int timeslot2, int colon) {
     
 }
 
+void displayNoteAndVelocity (int note, int velocity) {
+    uint8_t data[5];
+    data[0] = 0x76;
+    data[1] = note / 0x10;
+    data[2] = note % 0x10;
+    data[3] = velocity / 0x10;
+    data[4] = velocity % 0x10;
+    
+    sendDisplayBytesManual(data, 5);
+}
+
 void displayCurrentNote(char note, int octave, int accidental) {
     
     

@@ -8,7 +8,7 @@
 #ifndef GPIO_I2C_H
 #define	GPIO_I2C_H
 
-
+#include <avr/io.h>
 
 typedef struct {
     
@@ -17,6 +17,7 @@ typedef struct {
     
 } inputs_t;
 
+void displayNoteAndVelocity (int note, int velocity);
 int sendDisplayBytesManual(uint8_t* data, uint8_t len);
 void setupDisplay();
 void setDisplay(int timeslot1, int timeslot2, int colon);

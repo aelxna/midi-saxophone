@@ -34,7 +34,7 @@ ISR(ADC0_RESRDY_vect) {
 
   currInputs.airflow = ADC0.RES;
 
-  setDisplay(currInputs.airflow / 100, currInputs.airflow % 100, 0);
+  //setDisplay(currInputs.airflow / 100, currInputs.airflow % 100, 0);
 }
 
 int main(void) {
@@ -47,6 +47,7 @@ int main(void) {
 
   // displayCurrentNote('a', 3, 1);
 
+  
   uint32_t pinData;
   uint8_t new_note = 0;
 
@@ -67,7 +68,7 @@ int main(void) {
       pinData &= ~0x0080;
     }
 
-    displayHex(pinData);
+    //displayHex(pinData);
 
     // run input checker
     uint8_t note = get_note(&currInputs);
@@ -77,6 +78,7 @@ int main(void) {
     }
     // do stuff with input
     send_note(note, vel, new_note, prevMapping);
+    displayNoteAndVelocity(note, vel);
     prevMapping = note;
     new_note = 0;
   }

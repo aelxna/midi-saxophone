@@ -14,8 +14,6 @@ typedef struct {
   uint8_t pin;
 } uart_pin_t;
 
-uart_pin_t uart_pin = {.dir = &(PORTC.DIR), .pin = PIN0_bm};
-
 // initialize the uart pins and settings
 void uart_init();
 
