@@ -31,6 +31,12 @@ uint8_t get_velocity(uint16_t adc) {
 
 void send_note(uint8_t note, uint8_t velocity, uint8_t new_note,
                mapping_t prev) {
+  // only send note on command first time bc midi uses running statuses
+  if (first_note_on) {
+    uart_write_byte(NOTE_ON);
+    first_note_on = 0;
+  }
+
   // shut off prev_note
   // note on w/ velocity 0 is an alias for note off
   if (new_note) {
@@ -38,11 +44,6 @@ void send_note(uint8_t note, uint8_t velocity, uint8_t new_note,
     uart_write_cmd(off_data, 2);
   }
 
-  // only send note on command first time bc midi uses running statuses
-  if (first_note_on) {
-    uart_write_byte(NOTE_ON);
-    first_note_on = 0;
-  }
   uint8_t note_data[]{note, velocity};
   uart_write_cmd(note_data, 2);
 }

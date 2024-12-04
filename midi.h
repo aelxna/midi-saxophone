@@ -19,7 +19,7 @@
 #define PROG_CHANGE 0xC0
 #define SYSEX_ON 0xF0
 #define SYSEX_OFF 0xF7
-#define ALTO_SAX 66
+#define ALTO_SAX 65
 
 typedef uint32_t mapping_t;
 
