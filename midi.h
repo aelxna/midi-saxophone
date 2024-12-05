@@ -1,8 +1,9 @@
 #ifndef MIDI_H
 #define MIDI_H
 
-#include "gpio_i2c.h"
 #include <avr/io.h>
+
+#include "gpio_i2c.h"
 
 #define MAP_LEN 32
 #define NOTE_MAPPING(idx) (idx + 49)
@@ -29,15 +30,14 @@ typedef uint32_t mapping_t;
 void setup_midi_device();
 
 // return the note number based on the input keys
-uint8_t get_note(inputs_t *inputs);
+uint16_t get_note(inputs_t *inputs);
 
 // return the dynamic based on the adc reading
 uint8_t get_velocity(uint16_t adc);
 
 // send a note on message with the given note and velocity
 // turn off the previous note when switching notes
-void send_note(uint8_t note, uint8_t velocity, uint8_t new_note,
-               mapping_t prev);
+void send_note(uint8_t note, uint8_t velocity, uint8_t new_note, mapping_t prev);
 
 // used to send a sysex message
 // not used in our program, but available for future sysex use
