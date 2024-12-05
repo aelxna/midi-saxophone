@@ -17,6 +17,7 @@
 // constants used for midi messages
 #define NOTE_ON 0x90
 #define PROG_CHANGE 0xC0
+#define START 0xFA
 #define SYSEX_ON 0xF0
 #define SYSEX_OFF 0xF7
 #define ALTO_SAX 65

@@ -38,6 +38,9 @@ const mapping_t map[] = {
 };
 
 void setup_midi_device() {
+  // tell it to start playing from the beginning
+  uart_write_byte(START);
+    
   // change channel 0 to alto sax
   uint8_t prog_change[] = {PROG_CHANGE, ALTO_SAX};
   uart_write_cmd(prog_change, 2);

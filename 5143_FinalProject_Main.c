@@ -23,8 +23,6 @@ int setup(void) {
   PORTD.DIRCLR = PIN1_bm;
   PORTD.PIN1CTRL = PORT_PULLUPEN_bm;
 
-//  setup_midi_device();
-
   sei();
 }
 
@@ -40,11 +38,13 @@ ISR(ADC0_RESRDY_vect) {
 int main(void) {
   /* Replace with your application code */
   setup();
-  _delay_ms(200);
 
   configureExpander();
 
   setDisplay(0, 0, 0);
+  
+  _delay_ms(200);
+  setup_midi_device();
 
   // displayCurrentNote('a', 3, 1);
 
