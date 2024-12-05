@@ -71,6 +71,7 @@ uint8_t get_velocity(uint16_t adc) {
 }
 
 void send_note(uint8_t note, uint8_t velocity, uint8_t new_note, mapping_t prev) {
+  uart_write_byte(CLOCK);
   // shut off prev_note
   // note on w/ velocity 0 is an alias for note off
   if (new_note) {

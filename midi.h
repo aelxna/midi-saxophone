@@ -18,6 +18,7 @@
 #define NOTE_ON 0x90
 #define PROG_CHANGE 0xC0
 #define START 0xFA
+#define CLOCK 0xF8
 #define SYSEX_ON 0xF0
 #define SYSEX_OFF 0xF7
 #define ALTO_SAX 65
