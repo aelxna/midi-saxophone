@@ -24,10 +24,30 @@ int setup(void) {
   uart_init();
   setupDisplay();
   setupADC();
+  setupSpeaker();
   PORTD.DIRCLR = PIN1_bm;
   PORTD.PIN1CTRL = PORT_PULLUPEN_bm;
 
   sei();
+}
+
+int hertzToPeriod (int hertz) {
+    return 3333333 / hertz;
+}
+
+void setupSpeaker() {
+    PORTC.DIRSET = PIN0_bm;
+    
+    TCA0.SINGLE.CTRLESET = TCA_SINGLE_CMD_RESET_gc;
+    TCA0.SINGLE.CTRLB = TCA_SINGLE_CMP0EN_bm | TCA_SINGLE_WGMODE_FRQ_gc;
+    PORTMUX.TCAROUTEA = PORTMUX_TCA0_PORTC_gc;
+    TCA0.SINGLE.EVCTRL &= ~(TCA_SINGLE_CNTEI_bm);
+    
+    TCA0.SINGLE.CTRLA = TCA_SINGLE_CLKSEL_DIV1_gc;
+    TCA0.SINGLE.PER = 7574; // 52081
+    TCA0.SINGLE.CMP0 = 3786;
+    
+    TCA0.SINGLE.CTRLA |= TCA_SINGLE_ENABLE_bm;
 }
 
 ISR(ADC0_RESRDY_vect) {
@@ -42,6 +62,8 @@ ISR(ADC0_RESRDY_vect) {
 int main(void) {
   /* Replace with your application code */
   setup();
+  
+  int hertz = 440;
 
   configureExpander();
 
@@ -59,7 +81,7 @@ int main(void) {
 
     pinData = readPins();
     
-
+    
     if (pinData & 0x00F0) {
       pinData |= 0x10000;
     } else {
@@ -78,14 +100,21 @@ int main(void) {
 
     // run input checker
     uint8_t note = get_note(&currInputs);
+    uint16_t noteFrequency = get_note(&currInputs);
     uint8_t vel = get_velocity(currInputs.airflow);
     if (currInputs.keys == prevMapping) {
       new_note = 1;
     }
     // do stuff with input
-    send_note(note, vel, new_note, prevMapping);
+    //send_note(note, vel, new_note, prevMapping);
     displayNoteAndVelocity(note, vel);
     prevMapping = note;
     new_note = 0;
+    
+    hertz = 1000;
+    int period = hertzToPeriod(noteFrequency);
+    TCA0.SINGLE.PERBUF = period;
+    TCA0.SINGLE.CMP0BUF = period/2;
+    
   }
 }
