@@ -12,11 +12,15 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <util/delay.h>
+#include <avr/cpufunc.h>
 
 inputs_t currInputs;
 mapping_t prevMapping;
 
 int setup(void) {
+  // disable cpu prescaling so the clock runs at 20 MHz
+//  ccp_write_io(&CLKCTRL.MCLKCTRLB, 0x00);
+    
   uart_init();
   setupDisplay();
   setupADC();
