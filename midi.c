@@ -49,6 +49,7 @@ uint8_t get_note(inputs_t *inputs) {
       return NOTE_MAPPING(i);
     }
   }
+  return NOTE_MAPPING(0);
 }
 
 uint8_t get_velocity(uint16_t adc) {
