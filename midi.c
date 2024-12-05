@@ -1,9 +1,6 @@
 #include "midi.h"
 #include "uart.h"
 
-// only need to call the note on message once
-uint8_t first_note_on = 1;
-
 // fun!
 const mapping_t map[] = {
     0x000008bf, // A#/Bb1
@@ -55,13 +52,14 @@ uint8_t get_note(inputs_t *inputs) {
 }
 
 uint8_t get_velocity(uint16_t adc) {
-  if (adc > 818) {
     return FORTE;
-  } else if (adc > 613) {
+  if (adc > 800) {
+    return FORTE;
+  } else if (adc > 640) {
     return MEZZO_FORTE;
-  } else if (adc > 408) {
+  } else if (adc > 480) {
     return MEZZO_PIANO;
-  } else if (adc > 203) {
+  } else if (adc > 320) {
     return PIANO;
   } else {
     return NOTE_OFF;
@@ -69,21 +67,15 @@ uint8_t get_velocity(uint16_t adc) {
 }
 
 void send_note(uint8_t note, uint8_t velocity, uint8_t new_note, mapping_t prev) {
-  // only send note on command first time bc midi uses running statuses
-  if (first_note_on) {
-    uart_write_byte(NOTE_ON);
-    first_note_on = 0;
-  }
-
   // shut off prev_note
   // note on w/ velocity 0 is an alias for note off
   if (new_note) {
-    uint8_t off_data[] = {prev, NOTE_OFF};
-    uart_write_cmd(off_data, 2);
+    uint8_t off_data[] = {NOTE_ON, prev, NOTE_OFF};
+    uart_write_cmd(off_data, 3);
   }
 
-  uint8_t note_data[] = {note, velocity};
-  uart_write_cmd(note_data, 2);
+  uint8_t note_data[] = {NOTE_ON, note, velocity};
+  uart_write_cmd(note_data, 3);
 }
 
 void send_sysex(uint8_t *id, int id_bytes, uint8_t *data, int data_bytes) {

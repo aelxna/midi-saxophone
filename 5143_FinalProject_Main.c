@@ -23,7 +23,7 @@ int setup(void) {
   PORTD.DIRCLR = PIN1_bm;
   PORTD.PIN1CTRL = PORT_PULLUPEN_bm;
 
-  setup_midi_device();
+//  setup_midi_device();
 
   sei();
 }
@@ -40,6 +40,7 @@ ISR(ADC0_RESRDY_vect) {
 int main(void) {
   /* Replace with your application code */
   setup();
+  _delay_ms(200);
 
   configureExpander();
 
@@ -47,14 +48,13 @@ int main(void) {
 
   // displayCurrentNote('a', 3, 1);
 
-  
   uint32_t pinData;
   uint8_t new_note = 0;
 
   while (1) {
 
     pinData = readPins();
-    currInputs.keys = pinData;
+    
 
     if (pinData & 0x00F0) {
       pinData |= 0x10000;
@@ -67,8 +67,10 @@ int main(void) {
     } else {
       pinData &= ~0x0080;
     }
-
-    //displayHex(pinData);
+    
+    currInputs.keys = pinData;
+    
+//    displayHex(pinData);
 
     // run input checker
     uint8_t note = get_note(&currInputs);
