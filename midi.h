@@ -30,7 +30,7 @@ typedef uint32_t mapping_t;
 void setup_midi_device();
 
 // return the note number based on the input keys
-uint16_t get_note(inputs_t *inputs);
+uint8_t get_note(inputs_t *inputs);
 
 // return the dynamic based on the adc reading
 uint8_t get_velocity(uint16_t adc);

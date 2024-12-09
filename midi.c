@@ -38,10 +38,6 @@ const mapping_t map[] = {
     0x0001f000     // F4     830.61
 };
 
-const uint16_t freqs[] = {138, 146, 155, 164, 174, 185, 196, 207, 220, 233, 246,
-                          261, 277, 293, 311, 329, 349, 369, 392, 415, 440, 466,
-                          493, 523, 554, 587, 622, 659, 698, 739, 783, 830};
-
 void setup_midi_device() {
     // tell it to start playing from the beginning
     uart_write_byte(START);
@@ -51,13 +47,13 @@ void setup_midi_device() {
     uart_write_cmd(prog_change, 2);
 }
 
-uint16_t get_note(inputs_t *inputs) {
+uint8_t get_note(inputs_t *inputs) {
     for (int i = 0; i < MAP_LEN; i++) {
         if (inputs->keys == map[i]) {
-            return freqs[i];
+            return NOTE_MAPPING(i);
         }
     }
-    return freqs[0];
+    return NOTE_MAPPING(0);
 }
 
 uint8_t get_velocity(uint16_t adc) {
