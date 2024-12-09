@@ -8,12 +8,16 @@
 #define F_CPU 3333333
 #endif
 
+// returns the frequency based on the current key mapping
 uint16_t get_freq(inputs_t * inputs);
 
+// initial setup for speaker
 void setupSpeaker();
 
+// convert frequency(Hz) to period
 int hertzToPeriod(int hertz);
 
+// set period of the tca peripheral
 void setPeriod(int period);
 
 void enableSpeaker();
