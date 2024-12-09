@@ -82,11 +82,11 @@ int main(void) {
 
     // run input checker
     uint8_t note = get_note(&currInputs);
-    uint16_t noteFrequency = get_note(&currInputs);
     uint8_t vel = get_velocity(currInputs.airflow);
     if (currInputs.keys == prevMapping) {
       new_note = 1;
     }
+    uint16_t noteFrequency = get_freq(&currInputs);
     // send midi info
     send_note(note, vel, new_note, prevMapping);
     displayNoteAndVelocity(note, vel);
