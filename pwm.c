@@ -39,3 +39,11 @@ void setPeriod(int period) {
     TCA0.SINGLE.PERBUF = period;
     TCA0.SINGLE.CMP0BUF = period/2;
 }
+
+void enableSpeaker() {
+    TCA0.SINGLE.CTRLA |= TCA_SINGLE_ENABLE_bm;
+}
+
+void disableSpeaker() {
+    TCA0.SINGLE.CTRLA &= ~(TCA_SINGLE_ENABLE_bm);
+}

@@ -16,5 +16,9 @@ int hertzToPeriod(int hertz);
 
 void setPeriod(int period);
 
+void enableSpeaker();
+
+void disableSpeaker();
+
 #endif	/* PWM_H */
 

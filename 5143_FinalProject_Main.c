@@ -44,8 +44,6 @@ ISR(ADC0_RESRDY_vect) {
 int main(void) {
   /* Replace with your application code */
   setup();
-  
-  int hertz = 440;
 
   configureExpander();
 
@@ -93,9 +91,12 @@ int main(void) {
     prevMapping = note;
     new_note = 0;
     // set pwm info
-    hertz = 1000;
-    int period = hertzToPeriod(noteFrequency);
-    setPeriod(period);
-    
+    if (vel >= MEZZO_PIANO) {
+        int period = hertzToPeriod(noteFrequency);
+        setPeriod(period);
+        enableSpeaker();
+    } else {
+        disableSpeaker();
+    }
   }
 }
