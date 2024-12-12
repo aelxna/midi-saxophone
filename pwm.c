@@ -8,6 +8,7 @@ const uint16_t freqs[] = {138, 146, 155, 164, 174, 185, 196, 207, 220, 233, 246,
                           493, 523, 554, 587, 622, 659, 698, 739, 783, 830};
 
 uint16_t get_freq(inputs_t *inputs) {
+    // converts button inputs to note frequency
     for (int i = 0; i < MAP_LEN; i++) {
         if (inputs->keys == map[i]) {
             return freqs[i];
@@ -17,8 +18,11 @@ uint16_t get_freq(inputs_t *inputs) {
 }
 
 void setupSpeaker() {
+
+    // change output direction of speaker pin
     PORTC.DIRSET = PIN0_bm;
-    
+
+    // configure TCA Peripheral
     TCA0.SINGLE.CTRLESET = TCA_SINGLE_CMD_RESET_gc;
     TCA0.SINGLE.CTRLB = TCA_SINGLE_CMP0EN_bm | TCA_SINGLE_WGMODE_FRQ_gc;
     PORTMUX.TCAROUTEA = PORTMUX_TCA0_PORTC_gc;
@@ -32,15 +36,18 @@ void setupSpeaker() {
 }
 
 int hertzToPeriod(int hertz) {
+    // converts frequency to period
     return F_CPU / hertz;
 }
 
 void setPeriod(int period) {
+    // sets the period of the PWM wave generator
     TCA0.SINGLE.PERBUF = period;
     TCA0.SINGLE.CMP0BUF = period/2;
 }
 
 void enableSpeaker() {
+    // enables speaker if previously disabled
     TCA0.SINGLE.CTRLA |= TCA_SINGLE_ENABLE_bm;
 }
 
