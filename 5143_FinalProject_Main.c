@@ -18,14 +18,22 @@
 inputs_t currInputs;
 mapping_t prevMapping;
 
+// midi = 0, PWM = 1
+int midiOrPWM = 1;
+
 int setup(void) {
   // disable cpu prescaling so the clock runs at 20 MHz
 //  ccp_write_io(&CLKCTRL.MCLKCTRLB, 0x00);
-    
-  uart_init();
+
+  if (midiOrPWM == 0)
+    uart_init();
+
+  if (midiOrPWM == 1)
+    setupSpeaker();
+  
   setupDisplay();
   setupADC();
-  setupSpeaker();
+  
   PORTD.DIRCLR = PIN1_bm;
   PORTD.PIN1CTRL = PORT_PULLUPEN_bm;
 
@@ -50,7 +58,9 @@ int main(void) {
   setDisplay(0, 0, 0);
   
   _delay_ms(200);
-  setup_midi_device();
+
+  if (midiOrPWM == 0)
+    setup_midi_device();
 
   // displayCurrentNote('a', 3, 1);
 
@@ -86,17 +96,21 @@ int main(void) {
     }
     uint16_t noteFrequency = get_freq(&currInputs);
     // send midi info
-    send_note(note, vel, new_note, prevMapping);
-    displayNoteAndVelocity(note, vel);
-    prevMapping = note;
-    new_note = 0;
+    if (midiOrPWM == 0) {
+      send_note(note, vel, new_note, prevMapping);
+      displayNoteAndVelocity(note, vel);
+      prevMapping = note;
+      new_note = 0;
+    }
     // set pwm info
-    if (vel >= MEZZO_PIANO) {
-        int period = hertzToPeriod(noteFrequency);
-        setPeriod(period);
-        enableSpeaker();
-    } else {
-        disableSpeaker();
+    if (midiOrPWM == 1) {
+      if (vel >= MEZZO_PIANO) {
+          int period = hertzToPeriod(noteFrequency);
+          setPeriod(period);
+          enableSpeaker();
+      } else {
+          disableSpeaker();
+      }
     }
   }
 }
